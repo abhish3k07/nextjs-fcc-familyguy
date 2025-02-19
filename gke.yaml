@@ -1,16 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gcp-devops-gke
+  name: familyguy-app  # ✅ Changed from "gcp-devops-gke" to "familyguy-app"
+  namespace: familygyu-app-ns  # ✅ Added namespace to match the Service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gcp
+      app: familyguy  # ✅ Updated label to match selector
   template:
     metadata:
       labels:
-        app: gcp
+        app: familyguy  # ✅ Updated label to match selector
     spec:
       containers:
       - name: familyguy-app
@@ -21,18 +22,18 @@ spec:
           - name: PORT
             value: "5000"
 ---
-apiVersion: "v1"
-kind: "Service"
+apiVersion: v1
+kind: Service
 metadata:
-  name: "gcp-devops-gke-service"
-  namespace: "familygyu-app-ns"
+  name: familyguy-app-service
+  namespace: familygyu-app-ns
   labels:
-    app.kubernetes.io/managed-by: "gcp-cloud-build-deploy"
+    app.kubernetes.io/managed-by: gcp-cloud-build-deploy
 spec:
   ports:
-  - protocol: "TCP"
+  - protocol: TCP
     port: 80
     targetPort: 5000
   selector:
-    app: "gcp"
-  type: "LoadBalancer"
+    app: familyguy  # ✅ Updated to match the Deployment selector
+  type: LoadBalancer
