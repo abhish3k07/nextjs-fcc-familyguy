@@ -7,3 +7,12 @@ images:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+  # deploy container image to GKE
+- name: "gcr.io/rosy-decker-447215-e6/familyguy-app:latest"
+  args:
+  - run
+  - --filename=gke.yaml
+  - --image=gcr.io/$PROJECT_ID/familyguy-app
+  - --location=us-central1-c
+  - --cluster=cluster-1
+  - --namespace=familygyu-app-ns
